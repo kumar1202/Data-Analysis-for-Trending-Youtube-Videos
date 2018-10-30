@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from matplotlib import dates as mdt
 import collections as cl
 
-csv = pd.read_csv('DEvideos.csv')
+csv = pd.read_csv('../datasets/DEvideos.csv')
 
 df = pd.DataFrame(csv)
 
