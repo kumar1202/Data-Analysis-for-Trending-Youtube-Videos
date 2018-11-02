@@ -1,9 +1,8 @@
 import pandas as pd
 from datetime import datetime as dt
 from matplotlib import pyplot as plt
+import seaborn as sns
 import numpy as np
-import collections as cl
-
 csv = pd.read_csv('../datasets/DEvideos.csv')
 df_DE = pd.DataFrame(csv)
 # csv = pd.read_csv('../datasets/CAvideos.csv')
@@ -15,27 +14,31 @@ df_DE = pd.DataFrame(csv)
 # csv = pd.read_csv('../datasets/USvideos.csv')
 # df_US = pd.DataFrame(csv)
 
-cat = list(df_DE.category_id)
-time = [x[0:10] for x in list(df_DE.trending_date)]
-sz = len(cat)
-cnt = cl.OrderedDict()
-for i in range(sz):
-    a = dt.strptime('20' + time[i], '%Y.%d.%m').date()
-    b = cat[i]
-    if a not in cnt:
-        cnt[a] = [0]*50
-        cnt[a][b] = 1
-    else:
-        cnt[a][b] += 1
+# print(df_DE.publish_time.head())
+p_date = [dt.strptime(x[0:10], '%Y-%m-%d').date() for x in list(df_DE.publish_time)]
+p_time = [int(x[11:13]) for x in list(df_DE.publish_time)]
 
-xs = [d for d in list(cnt.keys())]
-for i in range(50):
-    ys = [x[i] for x in list(cnt.values())]
-    if sum(ys)//50 > 20:
-        plt.plot(xs, ys, label = str(i))
+cnt_weekday = [0]*7
+cnt_time = [0]*24
 
-# xs = ['201711', '201712', '201801', '201802', '201803', '201804',\
-#       '201805', '201806']
+for i in range(len(p_date)):
+    cnt_weekday[p_date[i].weekday()]+=1
+    cnt_time[p_time[i]]+=1
+
+str_weekday = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+sns.barplot(x = 'Weekdays', y = 'Numbers', data=cnt_weekday)
+# plt.subplot(2, 1, 1)
+# plt.bar(str_weekday, cnt_weekday)
+# plt.subplot(2, 1, 2)
+# plt.bar(range(1, 25), cnt_time)
+plt.show()
+# xs = [d for d in list(cnt.keys())]
+# for i in range(50):
+#     ys = [x[i] for x in list(cnt.values())]
+#     if sum(ys)//50 > 20:
+#         plt.plot(xs, ys, label = str(i))
+
+
 # btm = np.array([0]*8)
 # for i in range(50):
 #     ys = np.array([x[i] for x in list(cnt.values())])
@@ -43,9 +46,9 @@ for i in range(50):
 #         plt.bar(xs, ys, bottom = btm, label = str(i))
 #         btm += ys
 
-plt.legend()
-plt.gcf().autofmt_xdate()
-plt.show()
+# plt.legend()
+# plt.gcf().autofmt_xdate()
+# plt.show()
 
 
 
