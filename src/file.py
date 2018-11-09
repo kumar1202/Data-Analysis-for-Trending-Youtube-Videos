@@ -1,18 +1,18 @@
 # file path of csv files
-csv_loc = {
+_csv = {
     'ca': '../datasets/CAvideos.csv',
     'de': '../datasets/DEvideos.csv',
     'fr': '../datasets/FRvideos.csv',
     'gb': '../datasets/GBvideos.csv',
     'us': '../datasets/USvideos.csv'}
 
-# file path of csv files
-json_loc = {
-    'us': '../datasets/US_category_id.json',
-    'gb': '../datasets/GB_category_id.json',
-    'fr': '../datasets/FR_category_id.json',
+# file path of json files
+_json = {
+    'ca': '../datasets/CA_category_id.json',
     'de': '../datasets/DE_category_id.json',
-    'ca': '../datasets/CA_category_id.json'}
+    'fr': '../datasets/FR_category_id.json',
+    'gb': '../datasets/GB_category_id.json',
+    'us': '../datasets/US_category_id.json'}
 
 
 def all_csv():
@@ -20,7 +20,7 @@ def all_csv():
     :rtype: dict_values
     Get file path of all csv files.
     '''
-    return csv_loc.values()
+    return _csv.values()
 
 
 def all_json():
@@ -28,24 +28,24 @@ def all_json():
     :rtype: dict_values
     Get file path of all json files.
     '''
-    return json_loc.values()
+    return _json.values()
 
 
-def csv_str(area):
+def csv_at(area):
     '''
     :area: str
     :rtype: str
     Get file path of specific csv file `area`.
     '''
-    assert area == 'ca' or area == 'de' or area == 'fr' or area == 'gb' or area == 'us'
-    return csv_loc[area]
+    assert area in ['ca', 'de', 'fr', 'gb', 'us']
+    return _csv[area]
 
 
-def json_str(area):
+def json_at(area):
     '''
     :area: str
     :rtype: str
     Get file path of specific json file `area`.
     '''
-    assert area == 'ca' or area == 'de' or area == 'fr' or area == 'gb' or area == 'us'
-    return json_loc[area]
+    assert area in ['ca', 'de', 'fr', 'gb', 'us']
+    return _json[area]

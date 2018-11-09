@@ -4,7 +4,7 @@ from category import *
 
 
 # read csv file
-df = pd.read_csv(csv_str('ca'))
+df = pd.read_csv(csv_at('ca'))
 
 # get specific column
 v_df = df[['category_id', 'views']]
@@ -21,7 +21,7 @@ id_lst = V_DF.category_id.tolist()
 # print(id(id_lst))
 
 # Convert number into name
-id_lst[:] = [cat_name(i) for i in id_lst]
+id_lst[:] = [category_name(i) for i in id_lst]
 # print(id_lst)
 # print(id(id_lst))
 
