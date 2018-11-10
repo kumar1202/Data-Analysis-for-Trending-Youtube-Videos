@@ -15,6 +15,9 @@ _json = {
     'us': '../datasets/US_category_id.json'}
 
 
+# Location abbreviation
+LOC_ABBR = ('ca', 'de', 'fr', 'gb', 'us')
+
 def all_csv():
     '''
     :rtype: dict_values
@@ -37,7 +40,7 @@ def csv_at(area):
     :rtype: str
     Get file path of specific csv file `area`.
     '''
-    assert area in ['ca', 'de', 'fr', 'gb', 'us']
+    assert area in LOC_ABBR
     return _csv[area]
 
 
@@ -47,5 +50,5 @@ def json_at(area):
     :rtype: str
     Get file path of specific json file `area`.
     '''
-    assert area in ['ca', 'de', 'fr', 'gb', 'us']
+    assert area in LOC_ABBR
     return _json[area]
