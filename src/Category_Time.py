@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+
 csv = pd.read_csv('../datasets/DEvideos.csv')
 df_DE = pd.DataFrame(csv)
 csv = pd.read_csv('../datasets/CAvideos.csv')
