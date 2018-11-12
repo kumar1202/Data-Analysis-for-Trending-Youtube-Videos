@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from category import *
 
 
@@ -15,19 +16,13 @@ V_DF = v_df.groupby('category_id')['views'].sum().rename('total_views').\
     reset_index().sort_values(by='total_views', ascending=False)
 # print(f"\nV_DF: \n{V_DF}\n")
 
-# Make a list of category_id from DataFrame
-id_lst = V_DF.category_id.tolist()
-# print(id_lst)
-# print(id(id_lst))
+# new column of dataframe: category_name
+V_DF['category_name'] = V_DF.category_id.map(lambda x: category_name(x))
+# print(V_DF)
 
-# Convert number into name
-id_lst[:] = [category_name(i) for i in id_lst]
-# print(id_lst)
-# print(id(id_lst))
-
-fig = V_DF.plot.bar(x='category_id', y='total_views', rot=45, legend=None)
+# plot figure
+fig = V_DF.plot.bar(x='category_name', y='total_views', rot=45, legend=None)
 fig.set_xlabel('Categories')
 fig.set_ylabel('Views in Canada')
-fig.set_xticklabels(id_lst)
 plt.show()
 plt.close()
