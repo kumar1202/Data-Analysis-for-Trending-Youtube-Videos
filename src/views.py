@@ -3,26 +3,37 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from category import *
 
+result = pd.DataFrame()
+for area in AREA:
+    # read csv file
+    df = pd.read_csv(csv_at(area))
 
-# read csv file
-df = pd.read_csv(csv_at('ca'))
+    # get specific column
+    v_df = df[['category_id', 'views']]
 
-# get specific column
-v_df = df[['category_id', 'views']]
-# print(f"\nv_df: \n{v_df.head(20)}\n")
+    # Combine rows with same category_id
+    v_df = v_df.groupby('category_id')['views'].sum().rename('area_views').\
+        reset_index().sort_values(by='area_views', ascending=False)
+    v_df['area'] = area
+    result = result.append(v_df)
 
-# Combine rows with same category_id
-V_DF = v_df.groupby('category_id')['views'].sum().rename('total_views').\
-    reset_index().sort_values(by='total_views', ascending=False)
-# print(f"\nV_DF: \n{V_DF}\n")
+# Add one new column: `category_name`
+result.insert(loc=1, column='category_name',
+              value=result.category_id.map(lambda x: category_name(x)))
 
-# new column of dataframe: category_name
-V_DF['category_name'] = V_DF.category_id.map(lambda x: category_name(x))
-# print(V_DF)
+# Add one new column `total_views` of 5 areas.
+result['total_views'] = result.groupby(
+    'category_id')['area_views'].transform('sum')
 
-# plot figure
-fig = V_DF.plot.bar(x='category_name', y='total_views', rot=45, legend=None)
-fig.set_xlabel('Categories')
-fig.set_ylabel('Views in Canada')
+# Sort total views in descending order.
+result = result.sort_values(by='total_views', ascending=False)
+# print(result)
+
+# # plot total views
+# sns.barplot(x="category_name", y="total_views", data=result,
+#             label="Total", color="b")
+
+# plot area views
+sns.catplot(x="category_name", y="area_views", hue="area",
+            data=result, kind="bar", palette="muted")
 plt.show()
-plt.close()
