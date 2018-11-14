@@ -6,37 +6,43 @@ from category import *
 
 result = pd.DataFrame()
 for area in AREA:
-    # read csv file
-    df = pd.read_csv(csv_at(area))
-
-    # get specific column
-    v_df = pd.DataFrame(df[['category_id', 'views']])
-
+    # read csv file and get specific column
     # Combine rows with same category_id
-    v_df = v_df.groupby('category_id')['views'].sum().rename('area_views').\
-        reset_index().sort_values(by='area_views', ascending=False)
-    v_df['area'] = AREA_FULL_NAME[area]
-    result = result.append(v_df)
+    df = pd.DataFrame(pd.read_csv(csv_at(area))[['category_id', 'views']]).groupby('category_id')[
+        'views'].sum().rename('Views in Area').reset_index()  # .sort_values(by='Views in Area', ascending=False)
+    df['Areas'] = AREA_FULL_NAME[area]
+    result = result.append(df)
 
-# Add one new column: `category_name`
-result.insert(loc=1, column='category_name',
+# Add one new column: `Categories`
+result.insert(loc=1, column='Categories',
               value=result.category_id.map(lambda x: category_name(x)))
 
-# Add one new column `total_views` of 5 areas.
-result['total_views'] = result.groupby(
-    'category_id')['area_views'].transform('sum')
+# Add one new column `Total Views` of 5 areas.
+result['Total Views'] = result.groupby(
+    'category_id')['Views in Area'].transform('sum')
 
 # Sort total views in descending order.
-result = result.sort_values(by='total_views', ascending=False).reset_index(drop=True).\
-    reset_index().rename(index=str, columns={
-        'category_name': 'Categories', 'area_views': 'Views in Area', 'total_views': 'Total Views', 'area': 'Areas'})
+result = result.sort_values(
+    by='Total Views', ascending=False).reset_index(drop=True).reset_index()
+print(result.head(50))
 
-# Plot total views.
-fig_total = sns.catplot(x="Categories", y="Total Views",
-                        data=result.head(50), kind='point')
+# Increase font size
+sns.set(font_scale = 2)
+fig1, ax1 = plt.subplots()
 
-# Plot area views.
-fig_area = sns.catplot(x="Categories", y="Views in Area", hue="Areas",
-                       data=result.head(50), kind="bar", palette="muted", legend=False, ax=fig_total.ax.twinx())
+# Plot area views at ax1.
+fig_area = sns.catplot(x="Categories", y="Views in Area", data=result.head(35), hue="Areas",
+                       hue_order=['Canada', 'France', 'Germany', 'Great British', 'USA'],
+                       kind="bar", palette="muted", edgecolor="1", alpha=0.85, legend_out=False, ax=ax1)
+
+# Plot total views at ax2 which is twin ax of ax1.
+ax2 = ax1.twinx()
+fig_total = sns.catplot(x="Categories", y="Total Views", data=result.head(35),
+                        kind='point', color="b", ax=ax2)
+
+# set figure
+ax1.set_title("Views in different categories and areas", fontsize=30)
+ax1.grid(None)
+
 
 plt.show()
