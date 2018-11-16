@@ -9,7 +9,7 @@ for area in AREA:
     # read csv file and get specific column
     # Combine rows with same category_id
     df = pd.DataFrame(pd.read_csv(csv_at(area))[['category_id', 'views']]).groupby('category_id')[
-        'views'].sum().rename('Views in Area').reset_index()  # .sort_values(by='Views in Area', ascending=False)
+        'views'].sum().rename('Views in Area').reset_index()
     df['Areas'] = AREA_FULL_NAME[area]
     result = result.append(df)
 
