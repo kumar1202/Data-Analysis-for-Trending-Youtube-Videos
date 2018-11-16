@@ -46,7 +46,7 @@ plt.plot(range(1,25),mp_US, label='US')
 
 plt.xticks(np.arange(1, 25))
 plt.yticks(np.arange(0,7600, 500))
-plt.xlabel('Time')
+plt.xlabel('Time(hour)')
 plt.ylabel('Published Videos')
 plt.legend(loc='upper left')
 plt.show()
