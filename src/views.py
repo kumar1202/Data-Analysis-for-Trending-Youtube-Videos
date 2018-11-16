@@ -24,7 +24,6 @@ view_mix['Total Views'] = view_mix.groupby(
 # Sort total views in descending order.
 view_mix = view_mix.sort_values(
     by='Total Views', ascending=False).reset_index(drop=True).reset_index()
-print(view_mix.head(50))
 
 # Increase font size
 sns.set(font_scale = 2)
