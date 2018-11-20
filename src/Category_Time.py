@@ -43,7 +43,9 @@ for i in p_time:
 dic = {'DE':mp_DE,'CA':mp_CA,'FR':mp_FR,'GB':mp_GB,'US':mp_US}
 frame = pd.DataFrame(dic)
 
-sns.lineplot(data=frame, palette="tab10", linewidth=1.5)
-
+time_video = sns.lineplot(data=frame, palette="tab10", linewidth=1.5)
+time_video.set_title('Published Videos in 24 Hours')
+time_video.set_xlabel('Hours')
+time_video.set_ylabel('Published Videos')
 plt.show()
 
