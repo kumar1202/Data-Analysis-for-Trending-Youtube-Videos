@@ -18,9 +18,11 @@ def videos_time(df):
 	frame = pd.DataFrame(dic)
 	sns.set(style="whitegrid")
 	fig = sns.lineplot(data=frame, palette="tab10", linewidth=1.5)
-	fig.set_title('Published Videos in 24 Hours')
+	fig.set_title('Publishing Videos in 24 Hours')
 	fig.set_xlabel('Hours')
-	fig.set_ylabel('Published Videos')
+	fig.set_ylabel('Publishing Videos')
+	plt.xticks(np.arange(0, 24, 1))
+	plt.yticks(np.arange(0, 7000, 1000))
 	plt.show()
 	
 dflist = {}
