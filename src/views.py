@@ -15,7 +15,7 @@ for area in AREA:
 
 # Add one new column: `Categories`
 result_view.insert(loc=1, column='Categories',
-                value=result_view.category_id.map(lambda x: category_name(x)))
+                   value=result_view.category_id.map(lambda x: category_name(x)))
 
 # Add one new column `Total Views` of 5 areas.
 result_view['Total Views'] = result_view.groupby(
