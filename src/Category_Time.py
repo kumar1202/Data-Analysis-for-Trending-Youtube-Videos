@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+import seaborn as sns
+sns.set(style="whitegrid")
 
 csv = pd.read_csv('../datasets/DEvideos.csv')
 df_DE = pd.DataFrame(csv)
@@ -38,16 +40,12 @@ mp_US = [0] * 24
 for i in p_time:
     mp_US[i] += 1
 
-plt.plot(range(1,25),mp_DE, label='DE')
-plt.plot(range(1,25),mp_CA, label='CA')
-plt.plot(range(1,25),mp_FR, label='FR')
-plt.plot(range(1,25),mp_GB, label='GB')
-plt.plot(range(1,25),mp_US, label='US')
+dic = {'DE':mp_DE,'CA':mp_CA,'FR':mp_FR,'GB':mp_GB,'US':mp_US}
+frame = pd.DataFrame(dic)
 
-plt.xticks(np.arange(1, 25))
-plt.yticks(np.arange(0,7600, 500))
-plt.xlabel('Time(hour)')
-plt.ylabel('Published Videos')
-plt.legend(loc='upper left')
+time_video = sns.lineplot(data=frame, palette="tab10", linewidth=1.5)
+time_video.set_title('Published Videos in 24 Hours')
+time_video.set_xlabel('Hours')
+time_video.set_ylabel('Published Videos')
 plt.show()
 
