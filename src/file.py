@@ -17,7 +17,7 @@ _json = {
 
 # Location abbreviation
 AREA = ('ca', 'de', 'fr', 'gb', 'us')
-AREA_FULL_NAME = {'ca':'Canada', 'de':'Germany', 'fr':'France', 'gb':'Great British', 'us':'USA'}
+_AREA_FULL_NAME = {'ca':'Canada', 'de':'Germany', 'fr':'France', 'gb':'Great British', 'us':'USA'}
 
 def all_csv():
     '''
@@ -41,6 +41,7 @@ def csv_at(area):
     :rtype: str
     Get file path of specific csv file `area`.
     '''
+    assert isinstance(area, str)
     assert area in AREA
     return _csv[area]
 
@@ -51,6 +52,15 @@ def json_at(area):
     :rtype: str
     Get file path of specific json file `area`.
     '''
+    assert isinstance(area, str)
     assert area in AREA
     return _json[area]
 
+def full_name(area):
+    '''
+    :area: str
+    Get full name of the area `area`.
+    '''
+    assert isinstance(area, str)
+    assert area in AREA
+    return _AREA_FULL_NAME[area]
