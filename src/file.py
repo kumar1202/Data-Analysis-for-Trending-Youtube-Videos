@@ -17,7 +17,9 @@ _json = {
 
 # Location abbreviation
 AREA = ('ca', 'de', 'fr', 'gb', 'us')
-_AREA_FULL_NAME = {'ca':'Canada', 'de':'Germany', 'fr':'France', 'gb':'Great British', 'us':'USA'}
+_AREA_FULL_NAME = {'ca': 'Canada', 'de': 'Germany',
+                   'fr': 'France', 'gb': 'Great British', 'us': 'USA'}
+
 
 def all_csv():
     '''
@@ -55,6 +57,7 @@ def json_at(area):
     assert isinstance(area, str)
     assert area in AREA
     return _json[area]
+
 
 def full_name(area):
     '''
