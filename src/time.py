@@ -4,22 +4,23 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 
 def videos_time(df):
-	
+	'''
+	Show the fluctuation publishing videos in 24 Hours within 5 different area
+	'''
 	sz = len(df)
-	
 	dic = {}
 	for e in df:
-		p_time = [int(x[11:13]) for x in list(df[e].publish_time)]
+		p_time = [int(x[11:13]) for x in list(df[e].publish_time)] # extract the hour from dataframe
 		video_counter = [0]*24
-		for j in p_time:
+		for j in p_time: # count the videos in each hour
 			video_counter[j] += 1
-		dic[e] = video_counter
+		dic[e] = video_counter # add the timetable into dictionary
 	frame = pd.DataFrame(dic)
 	sns.set(style="whitegrid")
-	time_video = sns.lineplot(data=frame, palette="tab10", linewidth=1.5)
-	time_video.set_title('Published Videos in 24 Hours')
-	time_video.set_xlabel('Hours')
-	time_video.set_ylabel('Published Videos')
+	fig = sns.lineplot(data=frame, palette="tab10", linewidth=1.5)
+	fig.set_title('Published Videos in 24 Hours')
+	fig.set_xlabel('Hours')
+	fig.set_ylabel('Published Videos')
 	plt.show()
 	
 dflist = {}
