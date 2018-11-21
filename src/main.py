@@ -24,7 +24,7 @@ class VideoManager:
     def get_cat_dict(self):
         cat_dict = {}
         for country in self.countries:
-            with open(self.data_root + '/' + country + '_category_id.json', 'r') as file:
+            with open(self.data_root + country + '_category_id.json', 'r') as file:
                 json_obj = json.load(file)
             for item in json_obj['items']:
                 cat_dict[int(item['id'])] = item['snippet']['title']
@@ -217,7 +217,7 @@ class VideoManager:
 
 
 if __name__ == '__main__':
-    data_root = 'datasets/'
+    data_root = '../datasets/'
     countries = ['CA', 'DE', 'FR', 'GB', 'US']
     country_full_name = {'CA': 'Canada', 'DE': 'Germany',
                          'FR': 'France', 'GB': 'Great British', 'US': 'USA'}
