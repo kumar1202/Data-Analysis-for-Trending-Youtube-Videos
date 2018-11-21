@@ -7,16 +7,16 @@ import json
 
 class VideoManager:
     def __init__(self):
-        pass
-
-    def load_data(self, data_root, countries, country_full_name):
-        self.data_root = data_root
-        self.countries = countries
-        self.full_name = country_full_name
+        self.data_root = '../datasets/'
+        self.countries = ['CA', 'DE', 'FR', 'GB', 'US']
+        self.full_name = {'CA': 'Canada', 'DE': 'Germany',
+                          'FR': 'France', 'GB': 'Great British', 'US': 'USA'}
         self.cat_dict = self.get_cat_dict()
+
+    def load_data(self):
         dataset = {}
-        for country in countries:
-            file_path = data_root + country + 'videos.csv'
+        for country in self.countries:
+            file_path = self.data_root + country + 'videos.csv'
             raw_df = pd.read_csv(file_path)
             dataset[country] = raw_df
         self.dataset = dataset
@@ -217,12 +217,8 @@ class VideoManager:
 
 
 if __name__ == '__main__':
-    data_root = '../datasets/'
-    countries = ['CA', 'DE', 'FR', 'GB', 'US']
-    country_full_name = {'CA': 'Canada', 'DE': 'Germany',
-                         'FR': 'France', 'GB': 'Great British', 'US': 'USA'}
     vm = VideoManager()
-    vm.load_data(data_root, countries, country_full_name)
+    vm.load_data()
     vm.videos_time()
     vm.total_views()
     vm.comment_views()
