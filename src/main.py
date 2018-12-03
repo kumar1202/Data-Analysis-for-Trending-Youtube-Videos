@@ -7,6 +7,9 @@ import json
 
 class VideoManager:
     def __init__(self):
+        '''
+        Initialize a VideoManager instance.
+        '''
         self.data_root = '../datasets/'
         self.countries = ['CA', 'DE', 'FR', 'GB', 'US']
         self.full_name = {'CA': 'Canada', 'DE': 'Germany',
@@ -14,6 +17,11 @@ class VideoManager:
         self.cat_dict = self.get_cat_dict()
 
     def load_data(self):
+        '''
+        Load video data into self.dataframe and prepare for plotting.
+
+        :return: None
+        '''
         dataset = {}
         for country in self.countries:
             file_path = self.data_root + country + 'videos.csv'
@@ -22,6 +30,11 @@ class VideoManager:
         self.dataset = dataset
 
     def get_cat_dict(self):
+        '''
+        Get the dict which maps category_id to category name.
+
+        :return: dict
+        '''
         cat_dict = {}
         for country in self.countries:
             with open(self.data_root + country + '_category_id.json', 'r') as file:
@@ -31,6 +44,9 @@ class VideoManager:
         return cat_dict
 
     def total_views(self):
+        '''
+        Deal with views of different countries for top 5 categories.
+        '''
         result_view = pd.DataFrame()
         for area in self.countries:
             # read csv file and get specific column
@@ -57,7 +73,7 @@ class VideoManager:
         sbplt_fig_view, sbplt_ax_view = plt.subplots()
 
         # Plot area views at sbplt_ax_view.
-        fig_view1 = sns.catplot(x="Categories", y="Views in Different Areas", data=result_view.head(35), hue="Areas",
+        fig_view1 = sns.catplot(x="Categories", y="Views in Different Areas", data=result_view.head(25), hue="Areas",
                                 hue_order=['Canada', 'France',
                                            'Germany', 'Great British', 'USA'],
                                 kind="bar", palette="muted", edgecolor="1", alpha=0.85, legend_out=False,
@@ -65,7 +81,7 @@ class VideoManager:
 
         # Plot total views at sbplt_ax_view2 which is twin ax of sbplt_ax_view.
         sbplt_ax_view2 = sbplt_ax_view.twinx()
-        fig_view2 = sns.catplot(x="Categories", y="Total Views", data=result_view.head(35),
+        fig_view2 = sns.catplot(x="Categories", y="Total Views", data=result_view.head(25),
                                 kind='point', color="b", ax=sbplt_ax_view2)
 
         # Set figure
@@ -97,6 +113,12 @@ class VideoManager:
         plt.yticks(np.arange(0, 7000, 1000))
 
     def comment_views(self):
+        '''
+        Analyze ratio of comment_count to views of all categories.
+
+        :param cat_count: the number of categories shown.
+        :return: None
+        '''
         dataframe = pd.DataFrame()
         for country in self.countries:
             raw_df = self.dataset[country][[
@@ -212,6 +234,12 @@ class VideoManager:
 
 
     def show_plot(self):
+        '''
+        Show all plots.
+
+        :param cat_count: the number of categories shown.
+        :return: None
+        '''
         plt.xticks(rotation=45)
         plt.show()
 
