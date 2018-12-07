@@ -55,5 +55,5 @@ pip3 install pandas
 ```
 
 ## Modules:
-* [`pyplot`](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html) from [`matplotlib`](https://matplotlib.org/)
-* [`json`](https://docs.python.org/3.6/library/json.html)
+1. [`pyplot`](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html) from [`matplotlib`](https://matplotlib.org/)
+2. [`json`](https://docs.python.org/3.6/library/json.html)
