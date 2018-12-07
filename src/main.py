@@ -156,6 +156,9 @@ class VideoManager:
         ax1.grid(None)
 
     def likes(self):
+        '''
+        Show video categories with the highest like/dislike ratio.
+        '''
         dataframe = pd.DataFrame()
         for country in self.countries:
             raw_df = self.dataset[country][[
@@ -194,6 +197,9 @@ class VideoManager:
         ax1.grid(None)
 
     def controversial(self):
+        '''
+        Show the most controversial video categories.
+        '''
         dataframe = pd.DataFrame()
         for country in self.countries:
             raw_df = self.dataset[country][[
